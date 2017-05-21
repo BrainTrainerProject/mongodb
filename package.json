@@ -1,22 +1,18 @@
 {
-  "name": "mongodb",
+  "name": "mongodbtest",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/BrainTrainerProject/mongodb.git"
-  },
   "author": "",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/BrainTrainerProject/mongodb/issues"
-  },
-  "homepage": "https://github.com/BrainTrainerProject/mongodb#readme",
   "dependencies": {
-    "mongoose": "^4.10.0"
+    "mongodb": "^2.2.26"
+  },
+  "devDependencies": {
+    "@types/mongodb": "^2.2.2",
+    "@types/mongoose": "^4.7.13"
   }
 }
