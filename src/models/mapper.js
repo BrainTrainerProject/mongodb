@@ -3,6 +3,9 @@ exports.convertNotecardToJsonResponse = function (notecard) {
     id: notecard.id,
     title: notecard.title,
     task: notecard.task,
-    answer: notecard.answer
-  }
+    answer: notecard.answer,
+    owner: notecard.owner,
+    lastchange: notecard.lastchange,
+    type: notecard.type,
+  };
 };
