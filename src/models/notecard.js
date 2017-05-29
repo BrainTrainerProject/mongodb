@@ -77,7 +77,7 @@ exports.deleteNotecard = (id, callback) => {
 /*
 UPDATE
 */
-exports.updateNotecard = (id, title, json, callback) => {
+exports.updateNotecard = (id, json, callback) => {
   Notecard.findOneAndUpdate({ _id: ObjectId(id) }, {
     $set: json,
   }, (err, result) => {

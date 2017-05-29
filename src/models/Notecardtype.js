@@ -40,3 +40,38 @@ exports.findAll = (callback) => {
     callback(err, notecardTypeMap);
   });
 };
+
+/*
+CREATE
+*/
+exports.createNotecardType = (json, callback) => {
+  const newCardType = new NotecardType({
+    name: json.name,
+  });
+  newCardType.save((err) => {
+    callback(err);
+  });
+};
+
+/*
+DELETE
+*/
+exports.deleteNotecardType = (id, callback) => {
+  NotecardType.findOneAndRemove({ _id: ObjectId(id) },
+    (err, result) => {
+      if (err) return (callback(new Error('Delete NotecardType', 500), result));
+      return result;
+    });
+};
+
+/*
+UPDATE
+*/
+exports.updateNotecardType = (id, json, callback) => {
+  NotecardType.findOneAndUpdate({ _id: ObjectId(id) }, {
+    $set: json,
+  }, (err, result) => {
+    if (err) return (callback(new Error('Update NotecardType', 400), result));
+    return result;
+  });
+};
