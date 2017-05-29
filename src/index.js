@@ -1,10 +1,10 @@
-// const mongoose = require('mongoose');
-const notecard = require('./models/notecard');
-const notecardtype = require('./models/notecardtype');
-const profile = require('./models/profile');
-const set = require('./models/set');
-const statistic = require('./models/statistic');
-const valuation = require('./models/valuation');
+import mongoose from 'mongoose';
+import notecard from './models/notecard';
+import notecardtype from './models/notecardtype';
+import profile from './models/profile';
+import set from './models/set';
+import statistic from './models/statistic';
+import valuation from './models/valuation';
 
 /* mongoose.connect('mongodb://brain:Trainer#2017@ds057806.mlab.com:57806/heroku_b8p1c09m');
 
@@ -31,9 +31,14 @@ console.log('After create');
 console.log('After findAll');
 */
 
+const connect = function (url, callback) {
+  mongoose.connect(url, callback);
+};
+
 exports.notecard = notecard;
 exports.notecardtype = notecardtype;
 exports.profile = profile;
 exports.set = set;
 exports.statistic = statistic;
 exports.valuation = valuation;
+exports.connect = connect;
