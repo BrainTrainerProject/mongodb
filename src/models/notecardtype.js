@@ -12,6 +12,7 @@ const NotecardType = mongoose.model('Notecardtype', notecardTypeSchema);
 
 /*
 READ ONE
+Kommentar
 */
 exports.findById = (id, callback) => {
   const isValidObjectId = (id.match(/^[0-9a-fA-F]{24}$/));
