@@ -2,18 +2,42 @@
   "name": "bt-mongodb",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "lib/index.js",
   "scripts": {
     "start": "node .",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "compile": "gulp build",
+    "test": "gulp test"
   },
   "author": "",
   "license": "ISC",
+  "babel": {
+    "presets": [
+      "latest"
+    ]
+  },
+  "eslintConfig": {
+    "extends": "airbnb",
+    "plugins": [
+      "import"
+    ]
+  },
   "dependencies": {
-    "mongodb": "^2.2.27"
+    "chai": "^3.5.0",
+    "mocha": "^3.4.1",
+    "mongodb": "^2.2.27",
+    "mongoose": "^4.10.2"
   },
   "devDependencies": {
-    "@types/mongodb": "^2.2.2",
-    "@types/mongoose": "^4.7.13"
+    "babel-cli": "^6.24.1",
+    "babel-preset-latest": "^6.24.1",
+    "eslint": "^3.19.0",
+    "eslint-config-airbnb": "^15.0.1",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-jsx-a11y": "^5.0.1",
+    "eslint-plugin-react": "^7.0.1",
+    "gulp": "^3.9.1",
+    "gulp-babel": "^6.1.2",
+    "gulp-eslint": "^3.0.1",
+    "gulp-mocha": "^4.3.1"
   }
 }
