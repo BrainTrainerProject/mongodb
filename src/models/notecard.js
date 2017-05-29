@@ -1,8 +1,5 @@
 import mongoose from 'mongoose';
-import mongodb from 'mongodb';
 import mapper from './mapper';
-
-const ObjectId = mongodb.ObjectID;
 
 const notecardSchema = mongoose.Schema({
   title: String,
@@ -22,7 +19,7 @@ exports.findById = (id, callback) => {
   if (!isValidObjectId) {
     return callback(new Error('Invalid ObjectId', 400), null);
   }
-  Notecard.findOne({ id: ObjectId(id) }, (err, card) => {
+  Notecard.findById(id, (err, card) => {
     if (!err && card) {
       callback(err, mapper.convertNotecardToJsonResponse(card));
     } else {
@@ -59,29 +56,24 @@ exports.createNotecard = (json, callback) => {
     type: json.type,
   });
   newCard.save((err) => {
-    callback(err);
+    callback(err, newCard);
   });
 };
 
 /*
 DELETE
 */
-exports.deleteNotecard = (id, callback) => {
-  Notecard.findOneAndRemove({ _id: ObjectId(id) },
-    (err, result) => {
-      if (err) return (callback(new Error('Delete Notecard', 500), result));
-      return result;
-    });
+exports.deleteNotecard = function (id, callback) {
+  Notecard.findByIdAndRemove(id, {}, (err, result) => {
+    callback(err, result);
+  });
 };
 
 /*
 UPDATE
 */
-exports.updateNotecard = (id, json, callback) => {
-  Notecard.findOneAndUpdate({ _id: ObjectId(id) }, {
-    $set: json,
-  }, (err, result) => {
-    if (err) return (callback(new Error('Update Notecard', 400), result));
-    return result;
+exports.updateNotecard = function (id, json, callback) {
+  Notecard.findByIdAndUpdate(id, { $set: json }, { new: true }, (err, result) => {
+    callback(err, result);
   });
 };
