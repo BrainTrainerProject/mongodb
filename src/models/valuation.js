@@ -55,7 +55,7 @@ exports.createValuation = (json, callback) => {
     createdAt: json.createdAt,
   });
   newValuation.save((err) => {
-    callback(err);
+    callback(err, newValuation);
   });
 };
 

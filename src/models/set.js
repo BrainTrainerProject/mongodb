@@ -61,7 +61,7 @@ exports.createSet = (json, callback) => {
     photourl: json.photourl,
   });
   newSet.save((err) => {
-    callback(err);
+    callback(err, newSet);
   });
 };
 

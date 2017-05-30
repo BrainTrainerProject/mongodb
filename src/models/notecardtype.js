@@ -50,7 +50,7 @@ exports.createNotecardType = (json, callback) => {
     name: json.name,
   });
   newCardType.save((err) => {
-    callback(err);
+    callback(err, newCardType);
   });
 };
 

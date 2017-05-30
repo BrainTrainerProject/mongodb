@@ -55,7 +55,7 @@ exports.createStatistic = (json, callback) => {
     totaltries: json.totaltries,
   });
   newStatistic.save((err) => {
-    callback(err);
+    callback(err, newStatistic);
   });
 };
 

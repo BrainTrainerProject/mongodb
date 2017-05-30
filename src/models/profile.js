@@ -59,7 +59,7 @@ exports.createProfile = (json, callback) => {
     sets: json.sets,
   });
   newProfile.save((err) => {
-    callback(err);
+    callback(err, newProfile);
   });
 };
 
