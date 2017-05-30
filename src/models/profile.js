@@ -33,6 +33,17 @@ exports.findById = (id, callback) => {
   return null;
 };
 
+exports.findByOauthtoken = (oauthtoken, callback) => {
+  Profile.findOne({ oauthtoken }, (err, profile) => {
+    if (!err && profile) {
+      callback(err, mapper.convertProfileToJsonResponse(profile));
+    } else {
+      callback(err, null);
+    }
+  });
+  return null;
+};
+
 /*
 READ ALL
 */
