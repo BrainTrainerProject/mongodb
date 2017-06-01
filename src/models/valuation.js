@@ -1,8 +1,5 @@
 import mongoose from 'mongoose';
-import mongodb from 'mongodb';
 import mapper from './mapper';
-
-const ObjectId = mongodb.ObjectID;
 
 const ValuationSchema = mongoose.Schema({
   score: Number,
@@ -21,7 +18,7 @@ exports.findById = (id, callback) => {
   if (!isValidObjectId) {
     return callback(new Error('Invalid ObjectId', 400), null);
   }
-  Valuation.findOne({ id: ObjectId(id) }, (err, valuation) => {
+  Valuation.findById(id, (err, valuation) => {
     if (!err && valuation) {
       callback(err, mapper.convertValuationToJsonResponse(valuation));
     } else {
@@ -63,21 +60,16 @@ exports.createValuation = (json, callback) => {
 DELETE
 */
 exports.deleteValuation = (id, callback) => {
-  Valuation.findOneAndRemove({ _id: ObjectId(id) },
-    (err, result) => {
-      if (err) return (callback(new Error('Delete Valuation', 500), result));
-      return result;
-    });
+  Valuation.findByIdAndRemove(id, {}, (err, result) => {
+    callback(err, result);
+  });
 };
 
 /*
 UPDATE
 */
 exports.updateValuation = (id, json, callback) => {
-  Valuation.findOneAndUpdate({ _id: ObjectId(id) }, {
-    $set: json,
-  }, (err, result) => {
-    if (err) return (callback(new Error('Update Valuation', 400), result));
-    return result;
+  Valuation.findByIdAndUpdate(id, { $set: json }, { new: true }, (err, result) => {
+    callback(err, result);
   });
 };

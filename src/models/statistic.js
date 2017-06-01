@@ -1,8 +1,5 @@
 import mongoose from 'mongoose';
-import mongodb from 'mongodb';
 import mapper from './mapper';
-
-const ObjectId = mongodb.ObjectID;
 
 const StatisticSchema = mongoose.Schema({
   profile: { type: mongoose.Schema.Types.ObjectId, ref: 'Profile' },
@@ -21,7 +18,7 @@ exports.findById = (id, callback) => {
   if (!isValidObjectId) {
     return callback(new Error('Invalid ObjectId', 400), null);
   }
-  Statistic.findOne({ id: ObjectId(id) }, (err, statistic) => {
+  Statistic.findById(id, (err, statistic) => {
     if (!err && statistic) {
       callback(err, mapper.convertStatisticToJsonResponse(statistic));
     } else {
@@ -63,21 +60,16 @@ exports.createStatistic = (json, callback) => {
 DELETE
 */
 exports.deleteStatistic = (id, callback) => {
-  Statistic.findOneAndRemove({ _id: ObjectId(id) },
-    (err, result) => {
-      if (err) return (callback(new Error('Delete Statistic', 500), result));
-      return result;
-    });
+  Statistic.findByIdAndRemove(id, {}, (err, result) => {
+    callback(err, result);
+  });
 };
 
 /*
 UPDATE
 */
 exports.updateStatistic = (id, json, callback) => {
-  Statistic.findOneAndUpdate({ _id: ObjectId(id) }, {
-    $set: json,
-  }, (err, result) => {
-    if (err) return (callback(new Error('Update Statistic', 400), result));
-    return result;
+  Statistic.findByIdAndUpdate(id, { $set: json }, { new: true }, (err, result) => {
+    callback(err, result);
   });
 };

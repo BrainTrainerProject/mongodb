@@ -1,8 +1,5 @@
 import mongoose from 'mongoose';
-import mongodb from 'mongodb';
 import mapper from './mapper';
-
-const ObjectId = mongodb.ObjectID;
 
 const SetSchema = mongoose.Schema({
   notecard: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Notecard' }],
@@ -24,7 +21,7 @@ exports.findById = (id, callback) => {
   if (!isValidObjectId) {
     return callback(new Error('Invalid ObjectId', 400), null);
   }
-  Set.findOne({ id: ObjectId(id) }, (err, set) => {
+  Set.findById(id, (err, set) => {
     if (!err && set) {
       callback(err, mapper.convertSetToJsonResponse(set));
     } else {
@@ -69,21 +66,16 @@ exports.createSet = (json, callback) => {
 DELETE
 */
 exports.deleteSet = (id, callback) => {
-  Set.findOneAndRemove({ _id: ObjectId(id) },
-    (err, result) => {
-      if (err) return (callback(new Error('Delete Set', 500), result));
-      return result;
-    });
+  Set.findByIdAndRemove(id, {}, (err, result) => {
+    callback(err, result);
+  });
 };
 
 /*
 UPDATE
 */
 exports.updateSet = (id, json, callback) => {
-  Set.findOneAndUpdate({ _id: ObjectId(id) }, {
-    $set: json,
-  }, (err, result) => {
-    if (err) return (callback(new Error('Update Set', 400), result));
-    return result;
+  Set.findByIdAndUpdate(id, { $set: json }, { new: true }, (err, result) => {
+    callback(err, result);
   });
 };

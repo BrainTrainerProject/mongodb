@@ -1,8 +1,5 @@
 import mongoose from 'mongoose';
-import mongodb from 'mongodb';
 import mapper from './mapper';
-
-const ObjectId = mongodb.ObjectID;
 
 const profileSchema = mongoose.Schema({
   email: String,
@@ -23,7 +20,7 @@ exports.findById = (id, callback) => {
   if (!isValidObjectId) {
     return callback(new Error('Invalid ObjectId', 400), null);
   }
-  Profile.findOne({ id: ObjectId(id) }, (err, profile) => {
+  Profile.findById(id, (err, profile) => {
     if (!err && profile) {
       callback(err, mapper.convertProfileToJsonResponse(profile));
     } else {
@@ -78,21 +75,16 @@ exports.createProfile = (json, callback) => {
 DELETE
 */
 exports.deleteProfile = (id, callback) => {
-  Profile.findOneAndRemove({ _id: ObjectId(id) },
-    (err, result) => {
-      if (err) return (callback(new Error('Delete Profile', 500), result));
-      return result;
-    });
+  Profile.findByIdAndRemove(id, {}, (err, result) => {
+    callback(err, result);
+  });
 };
 
 /*
 UPDATE
 */
 exports.updateProfile = (id, json, callback) => {
-  Profile.findOneAndUpdate({ _id: ObjectId(id) }, {
-    $set: json,
-  }, (err, result) => {
-    if (err) return (callback(new Error('Update Profile', 400), result));
-    return result;
+  Profile.findByIdAndUpdate(id, { $set: json }, { new: true }, (err, result) => {
+    callback(err, result);
   });
 };

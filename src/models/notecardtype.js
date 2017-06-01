@@ -1,8 +1,5 @@
 import mongoose from 'mongoose';
-import mongodb from 'mongodb';
 import mapper from './mapper';
-
-const ObjectId = mongodb.ObjectID;
 
 const notecardTypeSchema = mongoose.Schema({
   name: String,
@@ -19,7 +16,7 @@ exports.findById = (id, callback) => {
   if (!isValidObjectId) {
     return callback(new Error('Invalid ObjectId', 400), null);
   }
-  NotecardType.findOne({ id: ObjectId(id) }, (err, type) => {
+  NotecardType.findById(id, (err, type) => {
     if (!err && type) {
       callback(err, mapper.convertNotecardTypeToJsonResponse(type));
     } else {
@@ -58,21 +55,16 @@ exports.createNotecardType = (json, callback) => {
 DELETE
 */
 exports.deleteNotecardType = (id, callback) => {
-  NotecardType.findOneAndRemove({ _id: ObjectId(id) },
-    (err, result) => {
-      if (err) return (callback(new Error('Delete NotecardType', 500), result));
-      return result;
-    });
+  NotecardType.findByIdAndRemove(id, {}, (err, result) => {
+    callback(err, result);
+  });
 };
 
 /*
 UPDATE
 */
 exports.updateNotecardType = (id, json, callback) => {
-  NotecardType.findOneAndUpdate({ _id: ObjectId(id) }, {
-    $set: json,
-  }, (err, result) => {
-    if (err) return (callback(new Error('Update NotecardType', 400), result));
-    return result;
+  NotecardType.findByIdAndUpdate(id, { $set: json }, { new: true }, (err, result) => {
+    callback(err, result);
   });
 };
