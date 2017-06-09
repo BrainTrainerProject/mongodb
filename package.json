@@ -22,10 +22,12 @@
     ]
   },
   "dependencies": {
+    "async": "^2.4.1",
     "chai": "^3.5.0",
     "mocha": "^3.4.1",
     "mongodb": "^2.2.27",
-    "mongoose": "^4.10.2"
+    "mongoose": "^4.10.2",
+    "should": "^11.2.1"
   },
   "devDependencies": {
     "babel-cli": "^6.24.1",
