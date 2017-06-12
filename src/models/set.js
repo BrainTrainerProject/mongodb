@@ -9,6 +9,8 @@ const SetSchema = mongoose.Schema({
   lastchange: Date,
   visibility: Boolean,
   photourl: String,
+  title: String,
+  description: String,
 });
 
 const Set = mongoose.model('Set', SetSchema);
@@ -29,6 +31,19 @@ exports.findById = (id, callback) => {
     }
   });
   return null;
+};
+
+/*
+READ ALL By Owner
+*/
+exports.findByOwner = (id, callback) => {
+  Set.find({ owner: id }, (err, sets) => {
+    const setMap = {};
+    for (let i = 0; i < sets.length; i += 1) {
+      setMap[sets[i].id] = mapper.convertSetToJsonResponse(sets[i]);
+    }
+    callback(err, setMap);
+  });
 };
 
 /*
@@ -56,6 +71,8 @@ exports.createSet = (json, callback) => {
     lastchange: json.lastchange,
     visibility: json.visibility,
     photourl: json.photourl,
+    title: json.title,
+    description: json.description,
   });
   newSet.save((err) => {
     callback(err, newSet);

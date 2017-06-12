@@ -12,7 +12,7 @@ const notecardSchema = mongoose.Schema({
 const Notecard = mongoose.model('Notecard', notecardSchema);
 
 /*
-READ
+READ ONE
 */
 exports.findById = (id, callback) => {
   const isValidObjectId = (id.match(/^[0-9a-fA-F]{24}$/));
@@ -30,7 +30,20 @@ exports.findById = (id, callback) => {
 };
 
 /*
-READ
+READ ALL by Owner
+*/
+exports.findByOwner = (id, callback) => {
+  Notecard.find({ owner: id }, (err, cards) => {
+    const notecardMap = {};
+    for (let i = 0; i < cards.length; i += 1) {
+      notecardMap[cards[i].id] = mapper.convertNotecardToJsonResponse(cards[i]);
+    }
+    callback(err, notecardMap);
+  });
+};
+
+/*
+READ ALL
 */
 exports.findAll = (callback) => {
   Notecard.find({}, (err, cards) => {

@@ -36,6 +36,8 @@ exports.convertSetToJsonResponse = function (set) {
     lastchange: set.lastchange,
     visibility: set.visibility,
     photourl: set.photourl,
+    title: set.title,
+    description: set.description,
   };
 };
 

@@ -29,6 +29,19 @@ exports.findById = (id, callback) => {
 };
 
 /*
+READ ALL by Owner
+*/
+exports.findByOwner = (id, callback) => {
+  Statistic.find({ profile: id }, (err, statistics) => {
+    const statisticMap = {};
+    for (let i = 0; i < statistics.length; i += 1) {
+      statisticMap[statistics[i].id] = mapper.convertStatisticToJsonResponse(statistics[i]);
+    }
+    callback(err, statisticMap);
+  });
+};
+
+/*
 READ ALL
 */
 exports.findAll = (callback) => {

@@ -29,6 +29,19 @@ exports.findById = (id, callback) => {
 };
 
 /*
+READ ALL by Owner
+*/
+exports.findByOwner = (id, callback) => {
+  Valuation.find({ profile: id }, (err, valuations) => {
+    const valuationMap = {};
+    for (let i = 0; i < valuations.length; i += 1) {
+      valuationMap[valuations[i].id] = mapper.convertValuationToJsonResponse(valuations[i]);
+    }
+    callback(err, valuationMap);
+  });
+};
+
+/*
 READ ALL
 */
 exports.findAll = (callback) => {
