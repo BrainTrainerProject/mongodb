@@ -1,5 +1,4 @@
 import mongoose from 'mongoose';
-import mapper from './mapper';
 
 const notecardSchema = mongoose.Schema({
   title: String,
@@ -21,7 +20,7 @@ exports.findById = (id, callback) => {
   }
   Notecard.findById(id, (err, card) => {
     if (!err && card) {
-      callback(err, mapper.convertNotecardToJsonResponse(card));
+      callback(err, card);
     } else {
       callback(err, null);
     }
@@ -36,7 +35,7 @@ exports.findByOwner = (id, callback) => {
   Notecard.find({ owner: id }, (err, cards) => {
     const notecardMap = {};
     for (let i = 0; i < cards.length; i += 1) {
-      notecardMap[cards[i].id] = mapper.convertNotecardToJsonResponse(cards[i]);
+      notecardMap[cards[i].id] = cards[i];
     }
     callback(err, notecardMap);
   });
@@ -49,7 +48,7 @@ exports.findAll = (callback) => {
   Notecard.find({}, (err, cards) => {
     const notecardMap = {};
     for (let i = 0; i < cards.length; i += 1) {
-      notecardMap[cards[i].id] = mapper.convertNotecardToJsonResponse(cards[i]);
+      notecardMap[cards[i].id] = cards[i];
     }
     callback(err, notecardMap);
   });

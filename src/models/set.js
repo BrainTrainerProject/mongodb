@@ -1,5 +1,4 @@
 import mongoose from 'mongoose';
-import mapper from './mapper';
 
 const SetSchema = mongoose.Schema({
   notecard: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Notecard' }],
@@ -25,7 +24,7 @@ exports.findById = (id, callback) => {
   }
   Set.findById(id, (err, set) => {
     if (!err && set) {
-      callback(err, mapper.convertSetToJsonResponse(set));
+      callback(err, set);
     } else {
       callback(err, null);
     }
@@ -40,7 +39,7 @@ exports.findByOwner = (id, callback) => {
   Set.find({ owner: id }, (err, sets) => {
     const setMap = {};
     for (let i = 0; i < sets.length; i += 1) {
-      setMap[sets[i].id] = mapper.convertSetToJsonResponse(sets[i]);
+      setMap[sets[i].id] = sets[i];
     }
     callback(err, setMap);
   });
@@ -53,7 +52,7 @@ exports.findAll = (callback) => {
   Set.find({}, (err, sets) => {
     const setMap = {};
     for (let i = 0; i < sets.length; i += 1) {
-      setMap[sets[i].id] = mapper.convertSetToJsonResponse(sets[i]);
+      setMap[sets[i].id] = sets[i];
     }
     callback(err, setMap);
   });

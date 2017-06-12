@@ -1,5 +1,4 @@
 import mongoose from 'mongoose';
-import mapper from './mapper';
 
 const StatisticSchema = mongoose.Schema({
   profile: { type: mongoose.Schema.Types.ObjectId, ref: 'Profile' },
@@ -20,7 +19,7 @@ exports.findById = (id, callback) => {
   }
   Statistic.findById(id, (err, statistic) => {
     if (!err && statistic) {
-      callback(err, mapper.convertStatisticToJsonResponse(statistic));
+      callback(err, statistic);
     } else {
       callback(err, null);
     }
@@ -35,7 +34,7 @@ exports.findByOwner = (id, callback) => {
   Statistic.find({ profile: id }, (err, statistics) => {
     const statisticMap = {};
     for (let i = 0; i < statistics.length; i += 1) {
-      statisticMap[statistics[i].id] = mapper.convertStatisticToJsonResponse(statistics[i]);
+      statisticMap[statistics[i].id] = statistics[i];
     }
     callback(err, statisticMap);
   });
@@ -48,7 +47,7 @@ exports.findAll = (callback) => {
   Statistic.find({}, (err, statistics) => {
     const statisticMap = {};
     for (let i = 0; i < statistics.length; i += 1) {
-      statisticMap[statistics[i].id] = mapper.convertStatisticToJsonResponse(statistics[i]);
+      statisticMap[statistics[i].id] = statistics[i];
     }
     callback(err, statisticMap);
   });

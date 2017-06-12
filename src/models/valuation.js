@@ -1,5 +1,4 @@
 import mongoose from 'mongoose';
-import mapper from './mapper';
 
 const ValuationSchema = mongoose.Schema({
   score: Number,
@@ -20,7 +19,7 @@ exports.findById = (id, callback) => {
   }
   Valuation.findById(id, (err, valuation) => {
     if (!err && valuation) {
-      callback(err, mapper.convertValuationToJsonResponse(valuation));
+      callback(err, valuation);
     } else {
       callback(err, null);
     }
@@ -35,7 +34,7 @@ exports.findByOwner = (id, callback) => {
   Valuation.find({ profile: id }, (err, valuations) => {
     const valuationMap = {};
     for (let i = 0; i < valuations.length; i += 1) {
-      valuationMap[valuations[i].id] = mapper.convertValuationToJsonResponse(valuations[i]);
+      valuationMap[valuations[i].id] = valuations[i];
     }
     callback(err, valuationMap);
   });
@@ -48,7 +47,7 @@ exports.findAll = (callback) => {
   Valuation.find({}, (err, valuations) => {
     const valuationMap = {};
     for (let i = 0; i < valuations.length; i += 1) {
-      valuationMap[valuations[i].id] = mapper.convertValuationToJsonResponse(valuations[i]);
+      valuationMap[valuations[i].id] = valuations[i];
     }
     callback(err, valuationMap);
   });

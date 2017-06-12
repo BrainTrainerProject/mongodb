@@ -1,5 +1,4 @@
 import mongoose from 'mongoose';
-import mapper from './mapper';
 
 const profileSchema = mongoose.Schema({
   email: String,
@@ -22,7 +21,7 @@ exports.findById = (id, callback) => {
   }
   Profile.findById(id, (err, profile) => {
     if (!err && profile) {
-      callback(err, mapper.convertProfileToJsonResponse(profile));
+      callback(err, profile);
     } else {
       callback(err, null);
     }
@@ -33,7 +32,7 @@ exports.findById = (id, callback) => {
 exports.findByOauthtoken = (oauthtoken, callback) => {
   Profile.findOne({ oauthtoken }, (err, profile) => {
     if (!err && profile) {
-      callback(err, mapper.convertProfileToJsonResponse(profile));
+      callback(err, profile);
     } else {
       callback(err, null);
     }
@@ -48,7 +47,7 @@ exports.findAll = (callback) => {
   Profile.find({}, (err, profiles) => {
     const profileMap = {};
     for (let i = 0; i < profiles.length; i += 1) {
-      profileMap[profiles[i].id] = mapper.convertProfileToJsonResponse(profiles[i]);
+      profileMap[profiles[i].id] = profiles[i];
     }
     callback(err, profileMap);
   });
