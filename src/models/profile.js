@@ -87,3 +87,31 @@ exports.updateProfile = (id, json, callback) => {
     callback(err, result);
   });
 };
+
+exports.addFollower = (id, followerlist, callback) => {
+  Profile.findByIdAndUpdate(id, { $push: { follower: { $each: followerlist } } },
+   { new: true }, (err, result) => {
+     callback(err, result);
+   });
+};
+
+exports.removeFollower = (id, followerlist, callback) => {
+  Profile.findByIdAndUpdate(id, { $pullAll: { follower: followerlist } },
+   (err, result) => {
+     callback(err, result);
+   });
+};
+
+exports.addSets = (id, setslist, callback) => {
+  Profile.findByIdAndUpdate(id, { $push: { sets: { $each: setslist } } },
+   { new: true }, (err, result) => {
+     callback(err, result);
+   });
+};
+
+exports.removeSets = (id, setslist, callback) => {
+  Profile.findByIdAndUpdate(id, { $pullAll: { sets: setslist } },
+   (err, result) => {
+     callback(err, result);
+   });
+};
