@@ -95,3 +95,45 @@ exports.updateSet = (id, json, callback) => {
     callback(err, result);
   });
 };
+
+exports.addNotecards = (id, notecardlist, callback) => {
+  Set.findByIdAndUpdate(id, { $push: { notecard: { $each: notecardlist } } },
+   { new: true }, (err, result) => {
+     callback(err, result);
+   });
+};
+
+exports.removeNotecards = (id, notecardlist, callback) => {
+  Set.findByIdAndUpdate(id, { $pullAll: { notecard: notecardlist } },
+   (err, result) => {
+     callback(err, result);
+   });
+};
+
+exports.addTags = (id, taglist, callback) => {
+  Set.findByIdAndUpdate(id, { $push: { tags: { $each: taglist } } },
+   { new: true }, (err, result) => {
+     callback(err, result);
+   });
+};
+
+exports.removeTags = (id, taglist, callback) => {
+  Set.findByIdAndUpdate(id, { $pullAll: { tags: taglist } },
+   (err, result) => {
+     callback(err, result);
+   });
+};
+
+exports.addValuations = (id, valuationlist, callback) => {
+  Set.findByIdAndUpdate(id, { $push: { valuations: { $each: valuationlist } } },
+   { new: true }, (err, result) => {
+     callback(err, result);
+   });
+};
+
+exports.removeValuations = (id, valuationlist, callback) => {
+  Set.findByIdAndUpdate(id, { $pullAll: { valuations: valuationlist } },
+   (err, result) => {
+     callback(err, result);
+   });
+};
