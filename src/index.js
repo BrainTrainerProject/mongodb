@@ -5,6 +5,7 @@ import profile from './models/profile';
 import set from './models/set';
 import statistic from './models/statistic';
 import valuation from './models/valuation';
+import activity from './models/activity';
 
 /* mongoose.connect('mongodb://brain:Trainer#2017@ds057806.mlab.com:57806/heroku_b8p1c09m');
 
@@ -41,4 +42,5 @@ exports.profile = profile;
 exports.set = set;
 exports.statistic = statistic;
 exports.valuation = valuation;
+exports.activity = activity;
 exports.connect = connect;
