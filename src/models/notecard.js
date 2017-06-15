@@ -59,7 +59,6 @@ CREATE
 */
 exports.createNotecard = (json, callback) => {
   const newCard = new Notecard({
-    id: json.id,
     title: json.title,
     task: json.task,
     answer: json.answer,
@@ -75,7 +74,7 @@ exports.createNotecard = (json, callback) => {
 /*
 DELETE
 */
-exports.deleteNotecard = function (id, callback) {
+exports.deleteNotecard = (id, callback) => {
   Notecard.findByIdAndRemove(id, {}, (err, result) => {
     callback(err, result);
   });
@@ -84,7 +83,7 @@ exports.deleteNotecard = function (id, callback) {
 /*
 UPDATE
 */
-exports.updateNotecard = function (id, json, callback) {
+exports.updateNotecard = (id, json, callback) => {
   Notecard.findByIdAndUpdate(id, { $set: json }, { new: true }, (err, result) => {
     callback(err, result);
   });

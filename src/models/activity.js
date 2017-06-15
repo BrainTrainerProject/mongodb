@@ -56,7 +56,6 @@ CREATE
 */
 exports.createActivity = (json, callback) => {
   const newActivity = new Activity({
-    id: json.id,
     owner: json.owner,
     sender: json.sender,
     activityType: json.activityType,
