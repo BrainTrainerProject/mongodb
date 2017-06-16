@@ -44,14 +44,10 @@ page: page number from client as request parameter
 per_page: number of results shown per page
 */
 exports.findByOwner = (id, page, perpage, callback) => {
-  Activity.find({ owner: id }, { skip: ((page - 1) * perpage),
-    limit: perpage }, (err, activities) => {
-      const activityMap = {};
-      for (let i = 0; i < activities.length; i += 1) {
-        activityMap[activities[i].id] = activities[i];
-      }
-      callback(err, activityMap);
-    });
+  Activity.find({ owner: id }).skip((page - 1) * perpage).limit(perpage)
+  .exec((err, activities) => {
+    callback(err, activities);
+  });
 };
 
 /*
