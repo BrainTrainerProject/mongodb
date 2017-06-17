@@ -4,8 +4,10 @@ const profileSchema = mongoose.Schema({
   email: String,
   oauthtoken: String,
   photourl: String,
-  follower: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Profile' }],
   visibility: Boolean,
+  cardsPerSession: Number,
+  interval: Number,
+  follower: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Profile' }],
   sets: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Set' }],
 });
 
@@ -61,8 +63,10 @@ exports.createProfile = (json, callback) => {
     email: json.email,
     oauthtoken: json.oauthtoken,
     photourl: json.photourl,
-    follower: json.follower,
     visibility: json.visibility,
+    cardsPerSession: json.cardsPerSession,
+    interval: json.interval,
+    follower: json.follower,
     sets: json.sets,
   });
   newProfile.save((err) => {
