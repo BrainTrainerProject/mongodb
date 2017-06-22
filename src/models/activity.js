@@ -4,6 +4,7 @@ const activitySchema = mongoose.Schema({
   owner: { type: mongoose.Schema.Types.ObjectId, ref: 'Profile' },
   sender: { type: mongoose.Schema.Types.ObjectId, ref: 'Profile' },
   activityType: String,
+  refid: String,
 });
 const Activity = mongoose.model('Activity', activitySchema);
 
@@ -71,6 +72,7 @@ exports.createActivity = (json, callback) => {
     owner: json.owner,
     sender: json.sender,
     activityType: json.activityType,
+    refid: json.refid,
   });
   newActivity.save((err) => {
     callback(err, newActivity);
