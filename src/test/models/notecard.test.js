@@ -1,7 +1,9 @@
+
+
 const chai = require('chai');
 const mocha = require('mocha');
 const DB = require('../db');
-// const fixtures = require('../fixtures/model-notecards');
+const fixtures = require('../fixtures/model-notecards');
 const Notecard = require('../../models/notecard');
 
 mocha.describe('Model Notecard Test', () => {
@@ -11,21 +13,19 @@ mocha.describe('Model Notecard Test', () => {
 
   mocha.beforeEach((done) => {
     console.log('dropping DB');
-    /* DB.drop((err) => {
-      if (err) return done(err);
-      console.log('loading fixtures');
-      DB.fixtures(fixtures, done);
-      console.log('fixtures loaded successfully');
-      done();
-      return null;
-    });*/
-    // DB.fixtures(fixtures, done);
-    return done();
+    DB.drop();
+    console.log('loading fixtures');
+    DB.fixtures(fixtures, done);
+    return null;
   });
 
-  mocha.it('all', (done) => {
-    Notecard.findAll((err, notecards) => {
-      chai.expect(notecards.length).to.equal(1);
+  mocha.it('dummy', (done) => {
+    done();
+  });
+
+  mocha.it('findById', (done) => {
+    Notecard.findById('593abcb5fc13ae6bea000000', (err, card) => {
+      chai.expect(card.id).to.equal('593abcb5fc13ae6bea000000');
       done();
     });
   });

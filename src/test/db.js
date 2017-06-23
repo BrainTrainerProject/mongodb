@@ -23,12 +23,18 @@ exports.getDB = () => state.db;
 
 
 exports.drop = (done) => {
-  if (!state.db) return done();
-  state.db.collections((err, collections) => {
+  const db = state.db;
+  if (!db) {
+    console.log('drop !db');
+    return done();
+  }
+  db.collections((err, collections) => {
     async.each(collections, (collection, cb) => {
       if (collection.collectionName.indexOf('system') === 0) {
+        console.log('drop collectionName system');
         return cb();
       }
+      // console.log('Removing collection: ', collection.name);
       collection.remove({});
       return null;
     }, done);
@@ -50,5 +56,6 @@ exports.fixtures = (data, done) => {
     });
     return null;
   }, done);
+  console.log('fixtures shoud be loaded');
   return null;
 };
