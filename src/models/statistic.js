@@ -31,12 +31,9 @@ exports.findById = (id, callback) => {
 READ ALL by Owner
 */
 exports.findByOwner = (id, callback) => {
-  Statistic.find({ profile: id }, (err, statistics) => {
-    const statisticMap = {};
-    for (let i = 0; i < statistics.length; i += 1) {
-      statisticMap[statistics[i].id] = statistics[i];
-    }
-    callback(err, statisticMap);
+  Statistic.find({ profile: id }).toArray()
+  .exec((err, statistics) => {
+    callback(err, statistics);
   });
 };
 
@@ -68,6 +65,12 @@ exports.createStatistic = (json, callback) => {
   });
 };
 
+exports.createStatistic = (statistics, callback) => {
+  Statistic.create(statistics, (err, result) => {
+    callback(err, result);
+  });
+};
+
 /*
 DELETE
 */
@@ -84,4 +87,17 @@ exports.updateStatistic = (id, json, callback) => {
   Statistic.findByIdAndUpdate(id, { $set: json }, { new: true }, (err, result) => {
     callback(err, result);
   });
+};
+
+exports.updateStatistic = (statistics, callback) => {
+  for (let i = 0; i < statistics.length; i += 1) {
+    Statistic.findByIdAndUpdate(statistics[i].id, { $set: {
+      profile: statistics[i].profile,
+      notecard: statistics[i].notecard,
+      successfultries: statistics[i].successfultries,
+      totaltries: statistics[i].totaltries,
+    } }, { new: true }, (err, result) => {
+      callback(err, result);
+    });
+  }
 };
