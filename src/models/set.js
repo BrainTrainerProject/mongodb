@@ -50,6 +50,13 @@ exports.findAll = (callback) => {
   });
 };
 
+exports.search = (searchParam, callback) => {
+  Set.find({ $or: [{ tags: { $in: searchParam } },
+   { title: { $in: searchParam } }] }, (err, sets) => {
+    callback(err, sets);
+  });
+};
+
 /*
 CREATE
 */
