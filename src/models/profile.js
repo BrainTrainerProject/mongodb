@@ -47,11 +47,7 @@ READ ALL
 */
 exports.findAll = (callback) => {
   Profile.find({}, (err, profiles) => {
-    const profileMap = {};
-    for (let i = 0; i < profiles.length; i += 1) {
-      profileMap[profiles[i].id] = profiles[i];
-    }
-    callback(err, profileMap);
+    callback(err, profiles);
   });
 };
 

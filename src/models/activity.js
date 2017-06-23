@@ -31,11 +31,7 @@ READ ALL by Owner
 */
 exports.findByOwner = (id, callback) => {
   Activity.find({ owner: id }, (err, activities) => {
-    const activityMap = {};
-    for (let i = 0; i < activities.length; i += 1) {
-      activityMap[activities[i].id] = activities[i];
-    }
-    callback(err, activityMap);
+    callback(err, activities);
   });
 };
 
@@ -56,11 +52,7 @@ READ ALL
 */
 exports.findAll = (callback) => {
   Activity.find({}, (err, activities) => {
-    const activityMap = {};
-    for (let i = 0; i < activities.length; i += 1) {
-      activityMap[activities[i].id] = activities[i];
-    }
-    callback(err, activityMap);
+    callback(err, activities);
   });
 };
 

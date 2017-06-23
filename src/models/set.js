@@ -37,11 +37,7 @@ READ ALL By Owner
 */
 exports.findByOwner = (id, callback) => {
   Set.find({ owner: id }, (err, sets) => {
-    const setMap = {};
-    for (let i = 0; i < sets.length; i += 1) {
-      setMap[sets[i].id] = sets[i];
-    }
-    callback(err, setMap);
+    callback(err, sets);
   });
 };
 
@@ -50,11 +46,7 @@ READ ALL
 */
 exports.findAll = (callback) => {
   Set.find({}, (err, sets) => {
-    const setMap = {};
-    for (let i = 0; i < sets.length; i += 1) {
-      setMap[sets[i].id] = sets[i];
-    }
-    callback(err, setMap);
+    callback(err, sets);
   });
 };
 

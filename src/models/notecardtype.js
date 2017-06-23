@@ -30,11 +30,7 @@ READ ALL
 */
 exports.findAll = (callback) => {
   NotecardType.find({}, (err, types) => {
-    const notecardTypeMap = {};
-    for (let i = 0; i < types.length; i += 1) {
-      notecardTypeMap[types[i].id] = types[i];
-    }
-    callback(err, notecardTypeMap);
+    callback(err, types);
   });
 };
 
