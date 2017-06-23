@@ -1,14 +1,15 @@
 {
     "collections": {
-        "notecards": [
-            {
-                "title": "Englisch Vokabeln",
-                "task": "Was heißt comment?",
-                "answer": "Kommentar",
-                "owner": "",
-                "lastchange": "2017-06-09T18:25:43.511Z",
-                "type": ""
-            }
+        "notecards": [{
+  "title": "Fivechat",
+  "task": "Crimson",
+  "answer": "Crimson",
+  "owner": {
+    "oid": "593abcb5fc13ae6bea000000"
+  },
+  "lastchange": "12/11/2016",
+  "type": null
+}
         ]
     }
 }

@@ -5,7 +5,7 @@ const state = {
   db: null,
 };
 
-const uri = 'mongodb://127.0.0.1:27017/test';
+const uri = 'mongodb://127.0.0.1:27017/mongodbtest';
 
 exports.connect = (done) => {
   if (state.db) return done();
@@ -29,7 +29,7 @@ exports.drop = (done) => {
       if (collection.collectionName.indexOf('system') === 0) {
         return cb();
       }
-      collection.remove(cb);
+      collection.remove({});
       return null;
     }, done);
   });
