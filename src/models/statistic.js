@@ -68,7 +68,7 @@ exports.createStatistic = (json, callback) => {
   });
 };
 
-exports.createStatistic = (statistics, callback) => {
+exports.createStatisticMultiple = (statistics, callback) => {
   Statistic.create(statistics, (err, result) => {
     callback(err, result);
   });
