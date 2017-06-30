@@ -92,7 +92,7 @@ exports.updateStatistic = (id, json, callback) => {
   });
 };
 
-exports.updateStatistic = (statistics, callback) => {
+exports.updateStatisticMultiple = (statistics, callback) => {
   async.eachSeries(statistics, (statistic, result) => {
     Statistic.findByIdAndUpdate(statistic.id, { $set: {
       profile: statistic.profile,
