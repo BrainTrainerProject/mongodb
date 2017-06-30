@@ -37,6 +37,13 @@ exports.findByOwner = (id, callback) => {
   });
 };
 
+exports.findByNotecardsAndOwner = (notecards, id, callback) => {
+  Statistic.find({ $and: [{ notecard: { $in: notecards } }, { profile: id }] },
+    (err, statistics) => {
+      callback(err, statistics);
+    });
+};
+
 /*
 READ ALL
 */
