@@ -1,10 +1,11 @@
-
+import index from '../../index';
 
 const chai = require('chai');
 const mocha = require('mocha');
 const DB = require('../db');
 const fixtures = require('../fixtures/model-notecards');
-const Notecard = require('../../models/notecard');
+
+const Notecard = index.notecard;
 
 mocha.describe('Model Notecard Test', () => {
   mocha.before((done) => {
@@ -23,32 +24,59 @@ mocha.describe('Model Notecard Test', () => {
     done();
   });
 
+
+  mocha.it('findByOwner', (done) => {
+    console.log('beginn test findbyowner');
+    Notecard.findByOwner('593abcb5fc13ae6bea000000', (err, cards) => {
+      console.log('ende findbyowner');
+      chai.assert.equal(cards[0].owner, '593abcb5fc13ae6bea000000');
+      chai.assert.equal(cards.length, 1);
+      console.log('cards length', cards.length);
+      done();
+    });
+    console.log('ende test findbyowner');
+  });
+
   mocha.it('findById', (done) => {
-    Notecard.findById('593abcb5fc13ae6bea000000', (err, card) => {
-      chai.expect(card.id).to.equal('593abcb5fc13ae6bea000000');
+    Notecard.findById('59565cdb4af33428880ea264', (err, card) => {
+      chai.assert.equal(card.id, '59565cdb4af33428880ea264');
       done();
     });
   });
 
-/*  mocha.it('create', (done) => {
+  /*
+  mocha.it('findAll', (done) => {
+    Notecard.findAll = (err, cards) => {
+      chai.assert.equal(cards.length, 2);
+      done();
+    };
+  });*/
+
+/*
+  mocha.it('create', (done) => {
     Notecard.createNotecard(
       {
-        id: '',
         title: 'Englisch Vokabeln',
         task: 'Was heißt comment?',
         answer: 'Kommentar',
-        owner: '',
-        lastchange: '2017-06-09T18:25:43.511Z',
-        type: '',
-      }, () => {
-      Notecard.findAll((err, notecards) => {
-        chai.expect(notecards.length).to.equal(1);
-        done();
-      });
+        owner: '595565bdb17a5d2248b107b0',
+        lastchange: '12/11/2016',
+        type: '595565bdb17a5d2248b107b0',
+      }, (err, newCard) => {
+      chai.expect(newCard.title).to.equal('Englisch Vokabeln');
+    });
+    Notecard.findByOwner('595565bdb17a5d2248b107b0', (err, cards) => {
+      chai.assert.equal(cards.length, 1);
+      chai.expect(cards[0].owner).to.equal('595565bdb17a5d2248b107b0');
+      done();
     });
     console.log('ende create');
     return null;
   });*/
 
-  // Test Delete remove
+  mocha.after((done) => {
+    DB.disconnect(done);
+  });
+
+  // Test Delete remove update
 });

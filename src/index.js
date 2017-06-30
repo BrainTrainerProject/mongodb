@@ -32,8 +32,12 @@ console.log('After create');
 console.log('After findAll');
 */
 
-const connect = function (url, callback) {
+const connect = (url, callback) => {
   mongoose.connect(url, callback);
+};
+
+const disconnect = () => {
+  mongoose.disconnect();
 };
 
 exports.notecard = notecard;
@@ -44,3 +48,5 @@ exports.statistic = statistic;
 exports.valuation = valuation;
 exports.activity = activity;
 exports.connect = connect;
+exports.disconnect = disconnect;
+exports.connection = mongoose.connection;

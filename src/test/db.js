@@ -1,6 +1,9 @@
-const dbClient = require('mongodb').MongoClient;
+import index from '../index';
+
+const json2mongo = require('json2mongo');
 const async = require('async');
 
+const connection = index.connection;
 const state = {
   db: null,
 };
@@ -10,13 +13,18 @@ const uri = 'mongodb://127.0.0.1:27017/mongodbtest';
 exports.connect = (done) => {
   if (state.db) return done();
 
-  dbClient.connect(uri, (err, db) => {
+  index.connect(uri, (err) => {
     if (err) return done(err);
-    state.db = db;
+    state.db = connection.db;
     done();
     return null;
   });
   return null;
+};
+
+exports.disconnect = (done) => {
+  index.disconnect();
+  done();
 };
 
 exports.getDB = () => state.db;
@@ -25,8 +33,8 @@ exports.getDB = () => state.db;
 exports.drop = (done) => {
   const db = state.db;
   if (!db) {
-    console.log('drop !db');
-    return done();
+    console.log('Datenbankverbindung fehlt!');
+    return null;
   }
   db.collections((err, collections) => {
     async.each(collections, (collection, cb) => {
@@ -47,11 +55,12 @@ exports.fixtures = (data, done) => {
   if (!db) {
     return done(new Error('Missing database connection'));
   }
-  const names = Object.keys(data.collections);
+  const jsonmongo = json2mongo(data);
+  const names = Object.keys(jsonmongo.collections);
   async.each(names, (name, cb) => {
     db.createCollection(name, (err, collection) => {
       if (err) return cb(err);
-      collection.insert(data.collections[name], cb);
+      collection.insert(jsonmongo.collections[name], cb);
       return null;
     });
     return null;

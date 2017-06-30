@@ -2,12 +2,17 @@
     "collections": {
         "notecards": [{
              "title": "Fivechat",
-             "task": "Crimson",
-             "answer": "Crimson",
-             "owner": {
-                "oid": "593abcb5fc13ae6bea000000"
-             },
+             "task": "Crimsonp",
+             "answer": "Crimsony",
+             "owner": {"$oid":"593abcb5fc13ae6bea000000"},
             "lastchange": "12/11/2016",
+            "type": null
+        },{
+            "_id": {"$oid":"59565cdb4af33428880ea264"},
+            "task": "feste id task",
+            "answer": "antwort",
+            "owner": null,
+            "lastchange": "30/06/2017",
             "type": null
         }]
     }
