@@ -33,11 +33,7 @@ READ ALL by Owner
 */
 exports.findByOwner = (id, callback) => {
   Notecard.find({ owner: id }, (err, cards) => {
-    const notecardMap = {};
-    for (let i = 0; i < cards.length; i += 1) {
-      notecardMap[cards[i].id] = cards[i];
-    }
-    callback(err, notecardMap);
+    callback(err, cards);
   });
 };
 
@@ -46,11 +42,7 @@ READ ALL
 */
 exports.findAll = (callback) => {
   Notecard.find({}, (err, cards) => {
-    const notecardMap = {};
-    for (let i = 0; i < cards.length; i += 1) {
-      notecardMap[cards[i].id] = cards[i];
-    }
-    callback(err, notecardMap);
+    callback(err, cards);
   });
 };
 

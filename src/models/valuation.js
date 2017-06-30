@@ -32,11 +32,7 @@ READ ALL by Owner
 */
 exports.findByOwner = (id, callback) => {
   Valuation.find({ profile: id }, (err, valuations) => {
-    const valuationMap = {};
-    for (let i = 0; i < valuations.length; i += 1) {
-      valuationMap[valuations[i].id] = valuations[i];
-    }
-    callback(err, valuationMap);
+    callback(err, valuations);
   });
 };
 
@@ -45,11 +41,7 @@ READ ALL
 */
 exports.findAll = (callback) => {
   Valuation.find({}, (err, valuations) => {
-    const valuationMap = {};
-    for (let i = 0; i < valuations.length; i += 1) {
-      valuationMap[valuations[i].id] = valuations[i];
-    }
-    callback(err, valuationMap);
+    callback(err, valuations);
   });
 };
 

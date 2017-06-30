@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import async from 'async';
 
 const StatisticSchema = mongoose.Schema({
   profile: { type: mongoose.Schema.Types.ObjectId, ref: 'Profile' },
@@ -31,8 +32,7 @@ exports.findById = (id, callback) => {
 READ ALL by Owner
 */
 exports.findByOwner = (id, callback) => {
-  Statistic.find({ profile: id }).toArray()
-  .exec((err, statistics) => {
+  Statistic.find({ profile: id }, (err, statistics) => {
     callback(err, statistics);
   });
 };
@@ -49,11 +49,7 @@ READ ALL
 */
 exports.findAll = (callback) => {
   Statistic.find({}, (err, statistics) => {
-    const statisticMap = {};
-    for (let i = 0; i < statistics.length; i += 1) {
-      statisticMap[statistics[i].id] = statistics[i];
-    }
-    callback(err, statisticMap);
+    callback(err, statistics);
   });
 };
 
@@ -97,14 +93,14 @@ exports.updateStatistic = (id, json, callback) => {
 };
 
 exports.updateStatistic = (statistics, callback) => {
-  for (let i = 0; i < statistics.length; i += 1) {
-    Statistic.findByIdAndUpdate(statistics[i].id, { $set: {
-      profile: statistics[i].profile,
-      notecard: statistics[i].notecard,
-      successfultries: statistics[i].successfultries,
-      totaltries: statistics[i].totaltries,
-    } }, { new: true }, (err, result) => {
+  async.eachSeries(statistics, (statistic, result) => {
+    Statistic.findByIdAndUpdate(statistic.id, { $set: {
+      profile: statistic.profile,
+      notecard: statistic.notecard,
+      successfultries: statistic.successfultries,
+      totaltries: statistic.totaltries,
+    } }, { new: true }, (err) => {
       callback(err, result);
     });
-  }
+  });
 };
