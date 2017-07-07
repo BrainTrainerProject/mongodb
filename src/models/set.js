@@ -50,12 +50,18 @@ exports.findAll = (callback) => {
   });
 };
 
-exports.search = (searchParam, orderByDate, callback) => {
+exports.search = (searchParam, orderByDate, sortAsc, callback) => {
   const findParam = { $and: [
     { $or: [{ tags: { $in: searchParam } }, { title: { $in: searchParam } },
     ] }, { visibility: true }] };
   if (orderByDate) {
-    Set.find(findParam).sort({ lastchange: 'descending' }).exec(callback);
+    let sortP;
+    if (sortAsc) {
+      sortP = { lastchange: 'ascending' };
+    } else {
+      sortP = { lastchange: 'descending' };
+    }
+    Set.find(findParam).sort(sortP).exec(callback);
   } else {
     Set.find(findParam, (err, sets) => {
       callback(err, sets);
