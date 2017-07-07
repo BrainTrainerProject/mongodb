@@ -51,8 +51,8 @@ exports.findAll = (callback) => {
 };
 
 exports.search = (searchParam, callback) => {
-  Set.find({ $or: [{ tags: { $in: searchParam } },
-   { title: { $in: searchParam } }] }, (err, sets) => {
+  Set.find({ $and: [{ $or: [{ tags: { $in: searchParam } }, { title: { $in: searchParam } }] },
+    { visibility: true }] }, (err, sets) => {
     callback(err, sets);
   });
 };
