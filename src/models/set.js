@@ -50,11 +50,17 @@ exports.findAll = (callback) => {
   });
 };
 
-exports.search = (searchParam, callback) => {
-  Set.find({ $and: [{ $or: [{ tags: { $in: searchParam } }, { title: { $in: searchParam } }] },
-    { visibility: true }] }, (err, sets) => {
-    callback(err, sets);
-  });
+exports.search = (searchParam, orderByDate, callback) => {
+  const findParam = { $and: [
+    { $or: [{ tags: { $in: searchParam } }, { title: { $in: searchParam } },
+    ] }, { visibility: true }] };
+  if (orderByDate) {
+    Set.find(findParam).sort({ lastchange: 'descending' }).exec(callback);
+  } else {
+    Set.find(findParam, (err, sets) => {
+      callback(err, sets);
+    });
+  }
 };
 
 /*
