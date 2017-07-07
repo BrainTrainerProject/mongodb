@@ -65,6 +65,5 @@ exports.fixtures = (data, done) => {
     });
     return null;
   }, done);
-  console.log('fixtures shoud be loaded');
   return null;
 };

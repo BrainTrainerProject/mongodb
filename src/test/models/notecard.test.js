@@ -13,9 +13,7 @@ mocha.describe('Model Notecard Test', () => {
   });
 
   mocha.beforeEach((done) => {
-    console.log('dropping DB');
     DB.drop();
-    console.log('loading fixtures');
     DB.fixtures(fixtures, done);
     return null;
   });
@@ -25,28 +23,25 @@ mocha.describe('Model Notecard Test', () => {
   });
 
 
-  mocha.it('findByOwner', (done) => {
-    console.log('beginn test findbyowner');
+  mocha.it('findNotecardByOwner', (done) => {
     Notecard.findByOwner('593abcb5fc13ae6bea000000', (err, cards) => {
-      console.log('ende findbyowner');
       chai.assert.equal(cards[0].owner, '593abcb5fc13ae6bea000000');
       chai.assert.equal(cards.length, 1);
-      console.log('cards length', cards.length);
       done();
     });
-    console.log('ende test findbyowner');
   });
 
-  mocha.it('findById', (done) => {
+  mocha.it('findNotecardById', (done) => {
     Notecard.findById('59565cdb4af33428880ea264', (err, card) => {
       chai.assert.equal(card.id, '59565cdb4af33428880ea264');
       done();
     });
   });
 
-  /*
-  mocha.it('findAll', (done) => {
+
+  /* mocha.it('findAllNotecards', (done) => {
     Notecard.findAll = (err, cards) => {
+      if (err) { done(new Error(err)); }
       chai.assert.equal(cards.length, 2);
       done();
     };
@@ -75,7 +70,9 @@ mocha.describe('Model Notecard Test', () => {
   });*/
 
   mocha.after((done) => {
-    DB.disconnect(done);
+    DB.drop();
+    done();
+    return null;
   });
 
   // Test Delete remove update

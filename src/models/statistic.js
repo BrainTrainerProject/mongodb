@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
-import async from 'async';
+
+const json2mongo = require('json2mongo');
 
 const StatisticSchema = mongoose.Schema({
   profile: { type: mongoose.Schema.Types.ObjectId, ref: 'Profile' },
@@ -55,21 +56,16 @@ exports.findAll = (callback) => {
 
 /*
 CREATE
+@TODO: createStatisticMultiple ueberfluessig
 */
 exports.createStatistic = (json, callback) => {
-  const newStatistic = new Statistic({
-    profile: json.profile,
-    notecard: json.notecard,
-    successfultries: json.successfultries,
-    totaltries: json.totaltries,
-  });
-  newStatistic.save((err) => {
+  Statistic.collection.insert(json2mongo(json), (err, newStatistic) => {
     callback(err, newStatistic);
   });
 };
 
 exports.createStatisticMultiple = (statistics, callback) => {
-  Statistic.create(statistics, (err, result) => {
+  Statistic.collection.insert(json2mongo(statistics), (err, result) => {
     callback(err, result);
   });
 };
@@ -87,20 +83,23 @@ exports.deleteStatistic = (id, callback) => {
 UPDATE
 */
 exports.updateStatistic = (id, json, callback) => {
-  Statistic.findByIdAndUpdate(id, { $set: json }, { new: true }, (err, result) => {
+  const mongo = json2mongo(json);
+  Statistic.findByIdAndUpdate(id, { $set: mongo }, { new: true }, (err, result) => {
     callback(err, result);
   });
 };
 
 exports.updateStatisticMultiple = (statistics, callback) => {
-  async.eachSeries(statistics, (statistic, result) => {
-    Statistic.findByIdAndUpdate(statistic.id, { $set: {
-      profile: statistic.profile,
-      notecard: statistic.notecard,
-      successfultries: statistic.successfultries,
-      totaltries: statistic.totaltries,
-    } }, { new: true }, (err) => {
+  console.log('start update multiple');
+  for (let i = 0; i < statistics.length; i += 1) {
+    Statistic.findByIdAndUpdate(statistics[i].id, { $set: {
+      profile: statistics[i].profile,
+      notecard: statistics[i].notecard,
+      successfultries: statistics[i].successfultries,
+      totaltries: statistics[i].totaltries,
+    } }, { new: true }, (err, result) => {
       callback(err, result);
     });
-  });
+  }
+  console.log('ende update multiple');
 };
