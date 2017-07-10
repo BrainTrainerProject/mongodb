@@ -28,7 +28,7 @@ exports.findById = (id, callback) => {
 };
 
 exports.findByIds = (ids, callback) => {
-  Valuation.find({ id: { $in: ids } }, (err, vals) => {
+  Valuation.find({ id: { $in: ids.map(o => mongoose.Types.ObjectId(o)) } }, (err, vals) => {
     callback(err, vals);
   });
 };
