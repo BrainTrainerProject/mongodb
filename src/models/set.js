@@ -50,6 +50,12 @@ exports.findAll = (callback) => {
   });
 };
 
+exports.findPublic = (callback) => {
+  Set.find({ visibility: true }, (err, sets) => {
+    callback(err, sets);
+  });
+};
+
 exports.search = (searchParam, orderByDate, sortAsc, callback) => {
   const findParam = { $and: [
     { $or: [{ tags: { $in: searchParam } }, { title: { $in: searchParam } },
