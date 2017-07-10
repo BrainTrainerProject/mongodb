@@ -27,6 +27,12 @@ exports.findById = (id, callback) => {
   return null;
 };
 
+exports.findByIds = (ids, callback) => {
+  Valuation.find({ id: { $in: ids } }, (err, vals) => {
+    callback(err, vals);
+  });
+};
+
 /*
 READ ALL by Owner
 */
