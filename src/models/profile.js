@@ -32,6 +32,12 @@ exports.findById = (id, callback) => {
   return null;
 };
 
+exports.findByIds = function (ids, callback) {
+  Profile.find({ _id: { $in: ids.map(o => mongoose.Types.ObjectId(o)) } }, (err, vals) => {
+    callback(err, vals);
+  });
+};
+
 exports.findByOauthtoken = (oauthtoken, callback) => {
   Profile.findOne({ oauthtoken }, (err, profile) => {
     if (!err && profile) {
