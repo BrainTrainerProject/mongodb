@@ -9,6 +9,7 @@ const profileSchema = mongoose.Schema({
   interval: Number,
   follower: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Profile' }],
   sets: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Set' }],
+  firebasetoken: String,
 });
 
 const Profile = mongoose.model('Profile', profileSchema);
@@ -64,6 +65,7 @@ exports.createProfile = (json, callback) => {
     interval: json.interval,
     follower: json.follower,
     sets: json.sets,
+    firebasetoken: json.firebasetoken,
   });
   newProfile.save((err) => {
     callback(err, newProfile);
