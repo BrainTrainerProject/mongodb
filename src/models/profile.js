@@ -10,6 +10,7 @@ const profileSchema = mongoose.Schema({
   follower: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Profile' }],
   sets: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Set' }],
   firebasetoken: String,
+  name: String,
 });
 
 const Profile = mongoose.model('Profile', profileSchema);
@@ -72,6 +73,7 @@ exports.createProfile = (json, callback) => {
     follower: json.follower,
     sets: json.sets,
     firebasetoken: json.firebasetoken,
+    name: json.name,
   });
   newProfile.save((err) => {
     callback(err, newProfile);
