@@ -71,6 +71,12 @@ exports.createActivity = (json, callback) => {
   });
 };
 
+exports.createActivities = (array, callback) => {
+  Activity.create(array, (err, act) => {
+    callback(err, act);
+  });
+};
+
 /*
 DELETE
 */

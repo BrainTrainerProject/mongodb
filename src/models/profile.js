@@ -19,10 +19,6 @@ const Profile = mongoose.model('Profile', profileSchema);
 READ ONE
 */
 exports.findById = (id, callback) => {
-  const isValidObjectId = (id.match(/^[0-9a-fA-F]{24}$/));
-  if (!isValidObjectId) {
-    return callback(new Error('Invalid ObjectId', 400), null);
-  }
   Profile.findById(id, (err, profile) => {
     if (!err && profile) {
       callback(err, profile);
