@@ -7,6 +7,8 @@ const connection = index.connection;
 const state = {
   db: null,
 };
+let jsonmongo = null;
+let names = null;
 
 const uri = 'mongodb://127.0.0.1:27017/mongodbtest';
 
@@ -30,23 +32,43 @@ exports.disconnect = (done) => {
 exports.getDB = () => state.db;
 
 
-exports.drop = (done) => {
+exports.dropAndLoad = (data, done) => {
   const db = state.db;
   if (!db) {
     console.log('Datenbankverbindung fehlt!');
     return null;
   }
-  db.collections((err, collections) => {
-    async.each(collections, (collection, cb) => {
-      if (collection.collectionName.indexOf('system') === 0) {
-        console.log('drop collectionName system');
-        return cb();
-      }
-      // console.log('Removing collection: ', collection.name);
-      collection.remove({});
+  jsonmongo = json2mongo(data);
+  names = Object.keys(jsonmongo.collections);
+  async.waterfall([
+    (next) => {
+      db.collections((err, collections) => {
+        async.each(collections, (collection, cb) => {
+          if (collection.collectionName.indexOf('system') === 0) {
+            console.log('drop collectionName system');
+            return cb();
+          }
+          // console.log('Removing collection: ', collection.name);
+          collection.remove({});
+          return null;
+        });
+      });
+      next();
       return null;
-    }, done);
-  });
+    },
+    (next) => {
+      async.each(names, (name, cb) => {
+        db.createCollection(name, (err, collection) => {
+          if (err) return cb(err);
+          collection.insert(jsonmongo.collections[name], cb);
+          return null;
+        });
+        return null;
+      });
+      next();
+      return null;
+    },
+  ], done);
   return null;
 };
 
@@ -55,8 +77,8 @@ exports.fixtures = (data, done) => {
   if (!db) {
     return done(new Error('Missing database connection'));
   }
-  const jsonmongo = json2mongo(data);
-  const names = Object.keys(jsonmongo.collections);
+  jsonmongo = json2mongo(data);
+  names = Object.keys(jsonmongo.collections);
   async.each(names, (name, cb) => {
     db.createCollection(name, (err, collection) => {
       if (err) return cb(err);

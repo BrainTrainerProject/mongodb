@@ -12,11 +12,14 @@ mocha.describe('Model Statistic Test', () => {
     DB.connect(done);
   });
 
-  mocha.beforeEach((done) => {
-    DB.drop();
-    DB.fixtures(fixtures, done);
-    return null;
+  mocha.it('load fixtures', (done) => {
+    DB.dropAndLoad(fixtures, done);
   });
+
+  /* mocha.beforeEach((done) => {
+    DB.dropAndLoad(fixtures, done);
+    return null;
+  });*/
 
   mocha.it('findStatisticByOwner', (done) => {
     Statistic.findByOwner('595d61600000000000000000', (err, statistics) => {

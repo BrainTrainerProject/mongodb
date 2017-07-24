@@ -12,11 +12,15 @@ mocha.describe('Model Notecard Test', () => {
     DB.connect(done);
   });
 
-  mocha.beforeEach((done) => {
-    DB.drop();
-    DB.fixtures(fixtures, done);
-    return null;
+  mocha.it('load fixtures', (done) => {
+    DB.dropAndLoad(fixtures, done);
   });
+
+  /* mocha.beforeEach((done) => {
+    // javascript promises needed!
+    DB.dropAndLoad(fixtures, done);
+    return null;
+  });*/
 
   mocha.it('dummy', (done) => {
     done();
@@ -39,15 +43,14 @@ mocha.describe('Model Notecard Test', () => {
   });
 
 
-  /* mocha.it('findAllNotecards', (done) => {
+  mocha.it('findAllNotecards', (done) => {
     Notecard.findAll = (err, cards) => {
-      if (err) { done(new Error(err)); }
+      console.log('notecardtest length ', cards.length);
       chai.assert.equal(cards.length, 2);
       done();
     };
-  });*/
+  }).timeout(30000);
 
-/*
   mocha.it('create', (done) => {
     Notecard.createNotecard(
       {
@@ -67,13 +70,16 @@ mocha.describe('Model Notecard Test', () => {
     });
     console.log('ende create');
     return null;
-  });*/
+  });
+
+  mocha.it('delete Notecard', (done) => {
+    done();
+  });
 
   mocha.after((done) => {
-    DB.drop();
     done();
     return null;
   });
 
-  // Test Delete remove update
+  // Test Delete update
 });
