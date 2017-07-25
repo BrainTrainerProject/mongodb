@@ -71,21 +71,3 @@ exports.dropAndLoad = (data, done) => {
   ], done);
   return null;
 };
-
-exports.fixtures = (data, done) => {
-  const db = state.db;
-  if (!db) {
-    return done(new Error('Missing database connection'));
-  }
-  jsonmongo = json2mongo(data);
-  names = Object.keys(jsonmongo.collections);
-  async.each(names, (name, cb) => {
-    db.createCollection(name, (err, collection) => {
-      if (err) return cb(err);
-      collection.insert(jsonmongo.collections[name], cb);
-      return null;
-    });
-    return null;
-  }, done);
-  return null;
-};

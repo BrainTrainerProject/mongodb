@@ -14,7 +14,7 @@ mocha.describe('Model Notecard Test', () => {
 
   mocha.it('load fixtures', (done) => {
     DB.dropAndLoad(fixtures, done);
-  });
+  }).timeout(20000);
 
   /* mocha.beforeEach((done) => {
     // javascript promises needed!

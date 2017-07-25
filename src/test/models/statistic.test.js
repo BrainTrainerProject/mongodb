@@ -14,7 +14,7 @@ mocha.describe('Model Statistic Test', () => {
 
   mocha.it('load fixtures', (done) => {
     DB.dropAndLoad(fixtures, done);
-  });
+  }).timeout(20000);
 
   /* mocha.beforeEach((done) => {
     DB.dropAndLoad(fixtures, done);
@@ -28,7 +28,6 @@ mocha.describe('Model Statistic Test', () => {
 
   mocha.it('findStatisticByOwner', (done) => {
     Statistic.findByOwner('595d61600000000000000000', (err, statistics) => {
-      if (err) { done(new Error(err)); }
       chai.assert.equal(statistics[0].profile, '595d61600000000000000000');
       chai.assert.equal(statistics.length, 1);
       done();
