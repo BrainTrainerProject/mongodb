@@ -24,7 +24,7 @@ mocha.describe('Model Statistic Test', () => {
   mocha.it('dummy', (done) => {
     // nicht loeschen
     done();
-  });
+  }).timeout(5000);
 
   mocha.it('findStatisticByOwner', (done) => {
     Statistic.findByOwner('595d61600000000000000000', (err, statistics) => {
@@ -32,7 +32,7 @@ mocha.describe('Model Statistic Test', () => {
       chai.assert.equal(statistics.length, 1);
       done();
     });
-  });
+  }).timeout(5000);
 
   mocha.it('createStatistic', (done) => {
     const json = {
@@ -49,7 +49,7 @@ mocha.describe('Model Statistic Test', () => {
       chai.assert.equal(statistics[0].successfultries, 20);
       done();
     });
-  });
+  }).timeout(5000);
 
   mocha.it('createStatisticMultiple', (done) => {
     const json = [{
@@ -69,7 +69,7 @@ mocha.describe('Model Statistic Test', () => {
       done();
       return result;
     });
-  });
+  }).timeout(5000);
 
   mocha.it('find created multipleStatistics', (done) => {
     Statistic.findByOwner('593abcb5fc13ae6bea000000', (err, statistics) => {
@@ -77,7 +77,7 @@ mocha.describe('Model Statistic Test', () => {
       chai.assert.equal(statistics[2].successfultries, 8);
       done();
     });
-  });
+  }).timeout(5000);
 
   mocha.it('updateStatistic', (done) => {
     Statistic.findByOwner('595d61600000000000000000', (err, statistics) => {
@@ -100,7 +100,7 @@ mocha.describe('Model Statistic Test', () => {
         return result;
       });
     });
-  });
+  }).timeout(5000);
 
   mocha.after((done) => {
     DB.disconnect(done);

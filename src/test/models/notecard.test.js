@@ -2,8 +2,8 @@ import index from '../../index';
 
 const chai = require('chai');
 const mocha = require('mocha');
-const DB = require('../db');
 const fixtures = require('../fixtures/model-notecards');
+const DB = require('../db');
 
 const Notecard = index.notecard;
 
@@ -25,7 +25,7 @@ mocha.describe('Model Notecard Test', () => {
   mocha.it('dummy', (done) => {
     // nicht loeschen
     done();
-  });
+  }).timeout(5000);
 
 
   mocha.it('findNotecardByOwner', (done) => {
@@ -34,14 +34,14 @@ mocha.describe('Model Notecard Test', () => {
       chai.assert.equal(cards.length, 1);
       done();
     });
-  });
+  }).timeout(5000);
 
   mocha.it('findNotecardById', (done) => {
     Notecard.findById('59565cdb4af33428880ea264', (err, card) => {
       chai.assert.equal(card.id, '59565cdb4af33428880ea264');
       done();
     });
-  });
+  }).timeout(5000);
 
 
 /*  mocha.it('findAllNotecards', (done) => {
@@ -66,7 +66,7 @@ mocha.describe('Model Notecard Test', () => {
       done();
     });
     return null;
-  });
+  }).timeout(5000);
 
   mocha.it('find created Notecard', (done) => {
     Notecard.findByOwner('595565bdb17a5d2248b107b0', (err, cards) => {
@@ -74,7 +74,7 @@ mocha.describe('Model Notecard Test', () => {
       chai.assert.equal(cards[0].owner, '595565bdb17a5d2248b107b0');
       done();
     });
-  });
+  }).timeout(5000);
 
   mocha.it('delete notecard', (done) => {
     Notecard.findByOwner('595565bdb17a5d2248b107b0', (err, cards) => {
@@ -84,14 +84,14 @@ mocha.describe('Model Notecard Test', () => {
         return result;
       });
     });
-  });
+  }).timeout(5000);
 
   mocha.it('find deleted notecard', (done) => {
     Notecard.findByOwner('595565bdb17a5d2248b107b0', (err, cards) => {
       chai.assert.equal(cards.length, 0);
       done();
     });
-  });
+  }).timeout(5000);
 
   mocha.after((done) => {
     done();
