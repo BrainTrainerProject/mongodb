@@ -53,7 +53,7 @@ exports.dropAndLoad = (data, done) => {
           return null;
         });
       });
-      next();
+      next(null);
       return null;
     },
     (next) => {
@@ -65,7 +65,7 @@ exports.dropAndLoad = (data, done) => {
         });
         return null;
       });
-      next();
+      next(null);
       return null;
     },
   ], done);
