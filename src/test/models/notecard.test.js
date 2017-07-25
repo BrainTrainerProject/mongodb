@@ -20,7 +20,7 @@ mocha.describe('Model Notecard Test', () => {
     // javascript promises needed!
     DB.dropAndLoad(fixtures, done);
     return null;
-  });*/
+  }); */
 
   mocha.it('dummy', (done) => {
     // nicht loeschen
@@ -50,7 +50,7 @@ mocha.describe('Model Notecard Test', () => {
       chai.assert.equal(cards.length, 2);
       done();
     };
-  }).timeout(30000);*/
+  }).timeout(30000); */
 
   mocha.it('create', (done) => {
     Notecard.createNotecard(

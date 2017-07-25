@@ -19,7 +19,7 @@ mocha.describe('Model Statistic Test', () => {
   /* mocha.beforeEach((done) => {
     DB.dropAndLoad(fixtures, done);
     return null;
-  });*/
+  }); */
 
   mocha.it('dummy', (done) => {
     // nicht loeschen
