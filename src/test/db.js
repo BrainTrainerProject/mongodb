@@ -61,7 +61,7 @@ exports.dropAndLoad = (data, done) => {
       }
       const jsonmongo = json2mongo(data);
       const names = Object.keys(jsonmongo.collections);
-      async.each(names, (name, cb) => {
+      async.eachSeries(names, (name, cb) => {
         db.createCollection(name, (err, collection) => {
           if (err) return cb(err);
           collection.insert(jsonmongo.collections[name], cb);
