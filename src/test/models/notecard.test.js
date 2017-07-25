@@ -23,6 +23,7 @@ mocha.describe('Model Notecard Test', () => {
   });*/
 
   mocha.it('dummy', (done) => {
+    // nicht loeschen
     done();
   });
 
@@ -43,13 +44,13 @@ mocha.describe('Model Notecard Test', () => {
   });
 
 
-  mocha.it('findAllNotecards', (done) => {
+/*  mocha.it('findAllNotecards', (done) => {
     Notecard.findAll = (err, cards) => {
       console.log('notecardtest length ', cards.length);
       chai.assert.equal(cards.length, 2);
       done();
     };
-  }).timeout(30000);
+  }).timeout(30000);*/
 
   mocha.it('create', (done) => {
     Notecard.createNotecard(
@@ -62,18 +63,34 @@ mocha.describe('Model Notecard Test', () => {
         type: '595565bdb17a5d2248b107b0',
       }, (err, newCard) => {
       chai.expect(newCard.title).to.equal('Englisch Vokabeln');
-    });
-    Notecard.findByOwner('595565bdb17a5d2248b107b0', (err, cards) => {
-      chai.assert.equal(cards.length, 1);
-      chai.expect(cards[0].owner).to.equal('595565bdb17a5d2248b107b0');
       done();
     });
-    console.log('ende create');
     return null;
   });
 
-  mocha.it('delete Notecard', (done) => {
-    done();
+  mocha.it('find created Notecard', (done) => {
+    Notecard.findByOwner('595565bdb17a5d2248b107b0', (err, cards) => {
+      chai.assert.equal(cards.length, 1);
+      chai.assert.equal(cards[0].owner, '595565bdb17a5d2248b107b0');
+      done();
+    });
+  });
+
+  mocha.it('delete notecard', (done) => {
+    Notecard.findByOwner('595565bdb17a5d2248b107b0', (err, cards) => {
+      /* eslint no-underscore-dangle: 0 */
+      Notecard.deleteNotecard(cards[0]._id, (err2, result) => {
+        done();
+        return result;
+      });
+    });
+  });
+
+  mocha.it('find deleted notecard', (done) => {
+    Notecard.findByOwner('595565bdb17a5d2248b107b0', (err, cards) => {
+      chai.assert.equal(cards.length, 0);
+      done();
+    });
   });
 
   mocha.after((done) => {
@@ -81,5 +98,5 @@ mocha.describe('Model Notecard Test', () => {
     return null;
   });
 
-  // Test Delete update
+  // Test update
 });
